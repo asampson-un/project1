@@ -9,7 +9,10 @@ import re
 #-----
 
 class Logic(QMainWindow, Ui_MainWindow):
-    def __init__(self):
+    def __init__(self) -> None:
+        """
+        Initialize window and make buttons usable
+        """
         super().__init__()
         self.setupUi(self)
 
@@ -18,9 +21,12 @@ class Logic(QMainWindow, Ui_MainWindow):
         self.candidate2_Radio.setText("Jane")
 
 
-    def submit(self):
+    def submit(self) -> None:
+        """
+        Submit vote information if given choice and correct ID
+        """
         try:
-            _ID = int(self.ID_Entry.text())
+            _ID :int = int(self.ID_Entry.text())
             if _ID <= 9999999 or _ID > 99999999: raise TypeError
             if self.radio_Group.checkedButton() is None: raise KeyError
         except ValueError, TypeError:
@@ -30,20 +36,19 @@ class Logic(QMainWindow, Ui_MainWindow):
             self.about_Label.setStyleSheet("color: orange;")
             self.about_Label.setText("No Choice Selected")
         else: #has good ID and selected a choice
-            print('ok!')
             self.about_Label.setText("")
 
             #create file if not exist
-            _file = open("voteinfo.txt", "a+")
+            _file :object = open("voteinfo.txt", "a+")
             _file.close()
 
             #check if ID is already in file
-            _exists = False
+            _exists :bool = False
             with open("voteinfo.txt", "r") as votefile:
                 for line in votefile:
                     line.rstrip()
                     if re.search("ID:", line):
-                        line = line.split()
+                        line :list = line.split()
                         if self.ID_Entry.text() == line[1]: #ID exists in file
                             _exists = True
                             self.about_Label.setStyleSheet("color: orange;")

@@ -1,8 +1,11 @@
 from logic import *
 
-def main():
-    application = QApplication([])
-    window = Logic()
+def main() -> None:
+    """
+    Create window from logic (and gui)
+    """
+    application :QApplication = QApplication([])
+    window :Logic = Logic()
     window.show()
     application.exec()
 
